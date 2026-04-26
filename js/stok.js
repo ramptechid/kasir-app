@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (!cabangId) {
       document.getElementById("stok-list").innerHTML =
         '<div class="empty-state"><div class="empty-icon">&#127978;</div>' +
-        '<p>Belum ada cabang.<br><a href="dashboard.html" style="color:#3b82f6;">Tambah cabang di Dashboard</a></p></div>';
+        '<p>Belum ada cabang.<br><a href="dashboard" style="color:#3b82f6;">Tambah cabang di Dashboard</a></p></div>';
       return;
     }
     loadStok();

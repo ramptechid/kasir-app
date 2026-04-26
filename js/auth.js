@@ -13,7 +13,7 @@ if (localStorage.getItem("is_login") !== "true") {
   const isOwnerPage = ownerOnly.some(function(p) { return path.includes(p); });
 
   if (role !== "owner" && isOwnerPage) {
-    window.location.href = "kasir.html";
+    window.location.href = "kasir";
   }
 })();
 

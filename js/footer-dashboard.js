@@ -7,25 +7,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // NAVIGATION
 function goDashboard() {
-  window.location.href = "dashboard.html";
+  window.location.href = "dashboard";
 }
 
 function goKategori() {
-  window.location.href = "kategori.html";
+  window.location.href = "kategori";
 }
 
 function goKatalog() {
-  window.location.href = "katalog.html";
+  window.location.href = "katalog";
 }
 
 function goStok() {
-  window.location.href = "stok.html";
+  window.location.href = "stok";
 }
 
 function goKasir() {
-  window.location.href = "kasir.html";
+  window.location.href = "kasir";
 }
 
 function goProduk() {
-  window.location.href = "produk.html";
+  window.location.href = "produk";
 }
