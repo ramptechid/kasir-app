@@ -36,7 +36,7 @@ async function register() {
 
     if (data.status === "success") {
       showToast("Registrasi berhasil! Mengalihkan ke login...", "success");
-      setTimeout(function() { window.location.href = "login.html"; }, 2000);
+      setTimeout(function() { window.location.href = "login"; }, 2000);
     } else {
       showToast(data.message || "Registrasi gagal", "error");
     }

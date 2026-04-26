@@ -9,7 +9,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbyYLXYJNq7PE8Tr2HtAmTyy
 
 function apiPost(action, extraData) {
   const tenant_id = localStorage.getItem("tenant_id");
-  if (!tenant_id) { window.location.href = "login.html"; return Promise.reject(); }
+  if (!tenant_id) { window.location.href = "login"; return Promise.reject(); }
 
   return fetch(API_URL, {
     method: "POST",

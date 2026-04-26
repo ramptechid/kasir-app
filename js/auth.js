@@ -1,6 +1,6 @@
 // ===== CEK LOGIN =====
 if (localStorage.getItem("is_login") !== "true") {
-  window.location.href = "login.html";
+  window.location.href = "login";
 }
 
 // ===== ROUTE GUARD BERDASARKAN ROLE =====
@@ -20,5 +20,5 @@ if (localStorage.getItem("is_login") !== "true") {
 // ===== LOGOUT =====
 function logout() {
   localStorage.clear();
-  window.location.href = "login.html";
+  window.location.href = "login";
 }
