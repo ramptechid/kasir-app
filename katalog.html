@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Katalog Produk - Warungin</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/katalog.css">
+  <link rel="icon" href="assets/logo.png">
+</head>
+<body>
+
+<div class="app">
+  <div id="sidebar-wrap"></div>
+
+  <div class="main">
+
+    <div class="topbar">
+      <button class="hamburger" onclick="toggleSidebar()">&#9776;</button>
+      <div class="topbar-title">&#128230; Katalog Produk</div>
+      <div class="role-badge" id="roleText">OWNER</div>
+    </div>
+
+    <div class="content">
+
+      <!-- TOOLBAR -->
+      <div class="katalog-toolbar">
+        <input id="katalog-search" class="katalog-search" placeholder="&#128269; Cari nama / barcode..." oninput="filterKatalog()">
+        <select id="katalog-filter-kat" class="katalog-select" onchange="filterKatalog()">
+          <option value="">Semua Kategori</option>
+        </select>
+      </div>
+
+      <!-- LIST -->
+      <div class="section-title">Daftar Produk <span class="section-count-badge" id="katalog-limit-badge">0/50</span></div>
+      <div id="katalog-list" class="katalog-list"></div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FAB -->
+<button class="fab" id="fab-tambah-katalog" onclick="openTambahKatalog()">&#43;</button>
+
+
+<!-- ===== MODAL TAMBAH / EDIT ===== -->
+<div id="modal-katalog" class="modal">
+  <div class="modal-box" style="max-width:440px;">
+    <div class="modal-head">
+      <div class="modal-head-title" id="katalog-modal-title">&#128230; Tambah Produk</div>
+      <button class="modal-close" onclick="closeModal('modal-katalog')">&#10005;</button>
+    </div>
+
+    <!-- Icon Picker -->
+    <div class="modal-field-label">Icon Produk</div>
+    <div class="katalog-icon-picker" id="katalog-icon-picker"></div>
+
+    <div class="modal-field-label">Nama Produk *</div>
+    <input class="modal-input" id="k-nama" placeholder="Contoh: Indomie Goreng">
+
+    <div class="modal-field-label">Barcode</div>
+    <input class="modal-input" id="k-barcode" placeholder="Kosongkan jika tidak ada">
+
+    <div class="input-row">
+      <div style="flex:1;">
+        <div class="modal-field-label">Harga Jual *</div>
+        <input class="modal-input" id="k-harga" type="number" min="0" placeholder="0">
+      </div>
+      <div style="flex:1;">
+        <div class="modal-field-label">Harga Modal</div>
+        <input class="modal-input" id="k-harga-modal" type="number" min="0" placeholder="0 (opsional)">
+      </div>
+    </div>
+
+    <div class="modal-field-label">Kategori</div>
+    <select class="modal-input" id="k-kategori">
+      <option value="">Memuat kategori...</option>
+    </select>
+
+    <input type="hidden" id="k-edit-id">
+    <input type="hidden" id="k-icon" value="&#128230;">
+
+    <button class="btn-primary" id="k-btn-save" onclick="simpanKatalog()">Simpan Produk</button>
+    <button class="btn-secondary" onclick="closeModal('modal-katalog')">Batal</button>
+  </div>
+</div>
+
+
+<!-- ===== MODAL ASSIGN CABANG ===== -->
+<div id="modal-assign-cabang" class="modal">
+  <div class="modal-box" style="max-width:420px;">
+    <div class="modal-head">
+      <div class="modal-head-title">&#127978; Stok per Cabang</div>
+      <button class="modal-close" onclick="closeModal('modal-assign-cabang')">&#10005;</button>
+    </div>
+    <div id="assign-produk-nama" class="assign-produk-label"></div>
+    <div class="info-box" style="margin-bottom:14px;">
+      &#9989; Aktifkan cabang yang <b>menjual</b> produk ini. Produk hanya muncul di Kasir cabang yang dipilih.
+    </div>
+    <div id="assign-cabang-list"></div>
+    <input type="hidden" id="assign-produk-id">
+    <button class="btn-primary" id="btn-simpan-assign" onclick="simpanAssign()">Simpan Stok</button>
+    <button class="btn-secondary" onclick="closeModal('modal-assign-cabang')">Batal</button>
+  </div>
+</div>
+
+
+<!-- ===== MODAL KONFIRM HAPUS ===== -->
+<div id="modal-hapus-katalog" class="modal">
+  <div class="modal-box" style="max-width:360px; text-align:center;">
+    <div style="font-size:40px; margin-bottom:12px;">&#128465;</div>
+    <div style="font-size:16px; font-weight:700; margin-bottom:8px;">Hapus Produk?</div>
+    <div style="font-size:13px; color:#94A3B8; margin-bottom:20px;" id="hapus-katalog-nama">Produk ini akan dihapus permanen.</div>
+    <button class="btn-primary" id="btn-konfirm-hapus-katalog" style="background:#ef4444;" onclick="eksekusiHapusKatalog()">Ya, Hapus</button>
+    <button class="btn-secondary" onclick="closeModal('modal-hapus-katalog')">Batal</button>
+  </div>
+</div>
+
+
+<script src="js/include.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/katalog.js"></script>
+<script>
+  loadSidebar("katalog");
+</script>
+
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kasir - Warungin</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/kasir.css">
+  <link rel="icon" href="assets/logo.png">
+</head>
+<body>
+
+<div class="app">
+  <div id="sidebar-wrap"></div>
+
+  <div class="main kasir-main">
+
+    <div class="topbar">
+      <button class="hamburger" onclick="toggleSidebar()">&#9776;</button>
+      <div class="topbar-title">&#129534; Kasir</div>
+      <div class="role-badge" id="roleText">OWNER</div>
+    </div>
+
+    <!-- Cabang Selector (owner saja) -->
+    <div class="cabang-bar" id="cabang-bar" style="display:none;">
+      <span class="cabang-bar-label">&#127978; Warung:</span>
+      <select id="cabang-selector" class="cabang-select"></select>
+      <span id="cabang-bar-hint" style="display:none;color:#eab308;font-size:12px;">
+        &#9888; Belum ada cabang &mdash; <a href="dashboard.html" style="color:#eab308;">tambah di Dashboard</a>
+      </span>
+    </div>
+
+    <!-- KASIR LAYOUT: produk + keranjang -->
+    <div class="kasir-layout">
+
+      <!-- ===== PANEL KIRI: PRODUK ===== -->
+      <div class="panel-produk">
+
+        <!-- Search + Filter -->
+        <div class="kasir-toolbar">
+          <input id="kasir-search" class="kasir-search" placeholder="&#128269; Cari produk / barcode..." oninput="filterProduk()">
+        </div>
+
+        <!-- Kategori Filter -->
+        <div class="kat-filter-row" id="kat-filter-row"></div>
+
+        <!-- Grid Produk -->
+        <div id="produk-grid" class="produk-grid"></div>
+
+      </div>
+
+      <!-- ===== PANEL KANAN: KERANJANG ===== -->
+      <div class="panel-keranjang">
+
+        <div class="cart-header">
+          <div class="cart-header-left">
+            <button class="cart-back-btn" onclick="closeCartMobile()" title="Kembali ke Produk">&#8592;</button>
+            <span>&#128722; Keranjang</span>
+          </div>
+          <button class="cart-clear" onclick="clearCart()" title="Kosongkan">&#128465; Kosongkan</button>
+        </div>
+
+        <!-- Item Keranjang -->
+        <div class="cart-items" id="cart-items">
+          <div class="cart-empty" id="cart-empty">
+            <div style="font-size:36px; margin-bottom:8px;">&#128722;</div>
+            <p>Keranjang masih kosong</p>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="cart-summary">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="s-subtotal">Rp 0</span>
+          </div>
+          <div class="summary-row">
+            <span>Diskon</span>
+            <div class="diskon-input-wrap">
+              <input id="s-diskon" class="diskon-input" type="number" min="0" value="0" oninput="hitungTotal()"> %
+            </div>
+          </div>
+          <div class="summary-divider"></div>
+          <div class="summary-row total-row">
+            <span>Total</span>
+            <span id="s-total">Rp 0</span>
+          </div>
+        </div>
+
+        <!-- Bayar -->
+        <button class="btn-bayar" id="btn-bayar" onclick="openBayar()" disabled>
+          &#128179; Proses Pembayaran
+        </button>
+
+      </div>
+    </div><!-- end kasir-layout -->
+
+    <!-- Mobile: cart toggle button -->
+    <button class="cart-toggle-btn" id="cart-toggle" onclick="toggleCartMobile()">
+      &#128722; <span id="cart-badge">0</span> item &nbsp;|&nbsp; <span id="cart-total-mobile">Rp 0</span>
+    </button>
+
+  </div><!-- end .main -->
+</div>
+
+
+<!-- ===== MODAL PEMBAYARAN ===== -->
+<div id="modal-bayar" class="modal">
+  <div class="modal-box" style="max-width: 380px;">
+    <div class="modal-head">
+      <div class="modal-head-title">&#128179; Pembayaran</div>
+      <button class="modal-close" onclick="closeModal('modal-bayar')">&#10005;</button>
+    </div>
+
+    <div class="bayar-total-display">
+      <div class="bayar-label">Total Bayar</div>
+      <div class="bayar-total-num" id="bayar-total-num">Rp 0</div>
+    </div>
+
+    <div class="modal-field-label">Metode Pembayaran</div>
+    <div class="metode-row">
+      <button class="metode-btn active" id="m-tunai" onclick="setMetode('tunai')">&#128181; Tunai</button>
+      <button class="metode-btn" id="m-transfer" onclick="setMetode('transfer')">&#128242; Transfer</button>
+      <button class="metode-btn" id="m-qris"     onclick="setMetode('qris')">&#9635; QRIS</button>
+    </div>
+
+    <!-- Tunai -->
+    <div id="section-tunai">
+      <div class="modal-field-label">Uang Diterima</div>
+      <input class="modal-input" id="uang-diterima" type="number" placeholder="0" oninput="hitungKembalian()">
+      <div class="nominal-cepat">
+        <button onclick="setNominal(5000)">5.000</button>
+        <button onclick="setNominal(10000)">10.000</button>
+        <button onclick="setNominal(20000)">20.000</button>
+        <button onclick="setNominal(50000)">50.000</button>
+        <button onclick="setNominal(100000)">100.000</button>
+        <button onclick="setNominalPas()">Uang Pas</button>
+      </div>
+      <div class="kembalian-box" id="kembalian-box">
+        <span>Kembalian</span>
+        <strong id="kembalian-num">Rp 0</strong>
+      </div>
+    </div>
+
+    <!-- Non-tunai -->
+    <div id="section-nontunai" style="display:none;">
+      <div class="modal-field-label">No. Referensi (opsional)</div>
+      <input class="modal-input" id="ref-number" placeholder="Contoh: TRF20240001">
+    </div>
+
+    <button class="btn-primary btn-konfirm" id="btn-konfirm" onclick="konfirmBayar()" disabled>
+      &#9989; Konfirmasi Bayar
+    </button>
+    <button class="btn-secondary" onclick="closeModal('modal-bayar')">Batal</button>
+  </div>
+</div>
+
+
+<!-- ===== MODAL STRUK ===== -->
+<div id="modal-struk" class="modal">
+  <div class="modal-box struk-box">
+    <div class="struk-header">
+      <div class="struk-logo">&#129534;</div>
+      <div class="struk-toko" id="struk-toko">Warungin</div>
+      <div class="struk-sub">Terima kasih sudah berbelanja!</div>
+    </div>
+
+    <div class="struk-divider">- - - - - - - - - - - - - - -</div>
+
+    <div class="struk-info">
+      <span id="struk-tanggal"></span>
+      <span id="struk-no"></span>
+    </div>
+
+    <div id="struk-items" class="struk-items"></div>
+
+    <div class="struk-divider">- - - - - - - - - - - - - - -</div>
+
+    <div class="struk-row"><span>Subtotal</span><span id="st-subtotal"></span></div>
+    <div class="struk-row" id="st-diskon-row"><span>Diskon</span><span id="st-diskon"></span></div>
+    <div class="struk-row struk-total"><span>TOTAL</span><span id="st-total"></span></div>
+    <div class="struk-row"><span>Bayar</span><span id="st-metode"></span></div>
+    <div class="struk-row" id="st-kembalian-row"><span>Kembalian</span><span id="st-kembalian"></span></div>
+
+    <div class="struk-divider">- - - - - - - - - - - - - - -</div>
+    <div class="struk-footer">Powered by Warungin POS</div>
+
+    <button class="btn-primary" onclick="selesaiTransaksi()" style="margin-top:16px;">&#43; Transaksi Baru</button>
+    <button class="btn-secondary" onclick="selesaiTransaksi()">Tutup</button>
+  </div>
+</div>
+
+
+<script src="js/include.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/kasir.js"></script>
+<script>
+  loadSidebar("kasir");
+</script>
+
+</body>
+</html>

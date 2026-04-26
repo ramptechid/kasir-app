@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Warungin</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="icon" href="assets/logo.png">
+</head>
+<body>
+
+<div class="app">
+  <div id="sidebar-wrap"></div>
+
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" onclick="toggleSidebar()">&#9776;</button>
+      <div class="topbar-title" id="storeName">Warungin</div>
+      <div class="role-badge" id="roleText">OWNER</div>
+    </div>
+
+    <div class="content">
+
+      <!-- HEADER + PERIOD -->
+      <div class="dash-header">
+        <div class="dash-welcome-block">
+          <div class="dash-greeting">Selamat datang kembali &#128075;</div>
+          <div class="dash-store" id="tenantInfo">...</div>
+          <div class="dash-date" id="currentDate"></div>
+        </div>
+        <div class="period-tabs">
+          <button class="period-tab active" data-p="today"  onclick="setPeriode('today')">Hari Ini</button>
+          <button class="period-tab"        data-p="week"   onclick="setPeriode('week')">7 Hari</button>
+          <button class="period-tab"        data-p="month"  onclick="setPeriode('month')">Bulan Ini</button>
+        </div>
+      </div>
+
+      <!-- KPI CARDS -->
+      <div class="kpi-grid">
+        <div class="kpi-card green">
+          <div class="kpi-icon">&#128176;</div>
+          <div class="kpi-body">
+            <div class="kpi-val" id="a-pendapatan">Rp 0</div>
+            <div class="kpi-label">Total Pendapatan</div>
+            <div class="kpi-badge" id="a-transaksi-badge">0 transaksi</div>
+          </div>
+        </div>
+        <div class="kpi-card blue">
+          <div class="kpi-icon">&#128200;</div>
+          <div class="kpi-body">
+            <div class="kpi-val" id="a-keuntungan">Rp 0</div>
+            <div class="kpi-label">Keuntungan Bersih</div>
+            <div class="kpi-badge" id="a-margin-badge">0% margin</div>
+          </div>
+        </div>
+        <div class="kpi-card purple">
+          <div class="kpi-icon">&#129534;</div>
+          <div class="kpi-body">
+            <div class="kpi-val" id="a-transaksi">0</div>
+            <div class="kpi-label">Total Transaksi</div>
+            <div class="kpi-badge" id="a-avg-badge">Avg Rp 0</div>
+          </div>
+        </div>
+        <div class="kpi-card orange">
+          <div class="kpi-icon">&#128683;</div>
+          <div class="kpi-body">
+            <div class="kpi-val" id="a-stok-habis">0</div>
+            <div class="kpi-label">Produk Stok Habis</div>
+            <div class="kpi-badge" id="a-produk-badge">0 total produk</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHARTS -->
+      <div class="charts-row">
+        <div class="chart-card wide">
+          <div class="chart-card-head">
+            <div class="chart-card-title">&#128200; Trend Penjualan &amp; Keuntungan</div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chart-trend"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-head">
+            <div class="chart-card-title">&#127978; Pendapatan per Cabang</div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chart-cabang"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- PERFORMA PER CABANG -->
+      <div class="section-title">&#127942; Performa Per Cabang</div>
+      <div id="cabang-performa" class="cabang-performa-list">
+        <div class="empty-state"><div class="empty-icon">&#8987;</div><p>Memuat data...</p></div>
+      </div>
+
+      <!-- TOP PRODUK -->
+      <div class="section-title" style="margin-top:28px;">&#128293; Produk Terlaris</div>
+      <div id="top-produk" class="top-produk-list">
+        <div class="empty-state"><div class="empty-icon">&#8987;</div><p>Memuat data...</p></div>
+      </div>
+
+      <!-- QUICK MANAGEMENT -->
+      <div class="quick-manage">
+        <div class="quick-manage-title">Manajemen Cepat</div>
+        <div class="quick-manage-row">
+          <button class="quick-btn" onclick="openModal('modal-kelola-cabang')">&#127978; Kelola Cabang <span class="quick-badge" id="badge-cabang">0</span></button>
+          <button class="quick-btn" onclick="openModal('modal-kelola-staff')">&#128101; Kelola Staff <span class="quick-badge" id="badge-staff">0</span></button>
+          <a href="katalog.html"  class="quick-btn">&#128230; Katalog Produk</a>
+          <a href="kategori.html" class="quick-btn">&#127991; Kategori</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== MODAL KELOLA CABANG ===== -->
+<div id="modal-kelola-cabang" class="modal">
+  <div class="modal-box" style="max-width:480px;">
+    <div class="modal-head">
+      <div class="modal-head-title">&#127978; Kelola Cabang</div>
+      <button class="modal-close" onclick="closeModal('modal-kelola-cabang')">&#10005;</button>
+    </div>
+    <div class="manage-add-row">
+      <div class="limit-pill">
+        <span class="limit-count" id="cabang-limit-count">0</span>
+        <span class="limit-sep">/5</span>
+        <div class="limit-bar"><div class="limit-fill" id="cabang-limit-fill" style="width:0%"></div></div>
+        <span class="limit-label">Cabang</span>
+      </div>
+      <button class="btn-manage-add" id="btn-tambah-cabang" onclick="openFormCabang()">&#43; Tambah Cabang</button>
+    </div>
+    <div id="cabang-list-wrap"><div class="manage-list-loading">Memuat...</div></div>
+  </div>
+</div>
+
+<!-- MODAL FORM CABANG -->
+<div id="modal-form-cabang" class="modal">
+  <div class="modal-box" style="max-width:400px;">
+    <div class="modal-head">
+      <div class="modal-head-title" id="form-cabang-title">&#127978; Tambah Cabang</div>
+      <button class="modal-close" onclick="closeModal('modal-form-cabang')">&#10005;</button>
+    </div>
+    <div class="modal-field-label">Nama Cabang *</div>
+    <input class="modal-input" id="c-nama" placeholder="Contoh: Cabang Utama">
+    <div class="modal-field-label">Alamat</div>
+    <input class="modal-input" id="c-alamat" placeholder="Jl. ...">
+    <div class="modal-field-label">No. Telepon</div>
+    <input class="modal-input" id="c-telepon" type="tel" placeholder="08xx...">
+    <input type="hidden" id="c-edit-id">
+    <button class="btn-primary" id="c-btn-save" onclick="simpanCabang()">Simpan Cabang</button>
+    <button class="btn-secondary" onclick="closeModal('modal-form-cabang')">Batal</button>
+  </div>
+</div>
+
+
+<!-- ===== MODAL KELOLA STAFF ===== -->
+<div id="modal-kelola-staff" class="modal">
+  <div class="modal-box" style="max-width:520px;">
+    <div class="modal-head">
+      <div class="modal-head-title">&#128101; Kelola Staff</div>
+      <button class="modal-close" onclick="closeModal('modal-kelola-staff')">&#10005;</button>
+    </div>
+    <div class="manage-add-row">
+      <div class="limit-pill">
+        <span class="limit-count" id="staff-limit-count">0</span>
+        <span class="limit-sep">/5</span>
+        <div class="limit-bar"><div class="limit-fill" id="staff-limit-fill" style="width:0%"></div></div>
+        <span class="limit-label">Staff</span>
+      </div>
+      <button class="btn-manage-add" id="btn-tambah-staf" onclick="openFormStaf()">&#43; Tambah Staff</button>
+    </div>
+    <div class="info-box" style="margin-bottom:12px;">
+      &#8226; <b>Staff</b> &mdash; akses Kasir &amp; Tambah Stok saja &nbsp;&nbsp;
+      &#8226; Tidak bisa mengubah harga atau katalog produk
+    </div>
+    <div id="staff-list-wrap"><div class="manage-list-loading">Memuat...</div></div>
+  </div>
+</div>
+
+<!-- MODAL FORM STAFF -->
+<div id="modal-form-staf" class="modal">
+  <div class="modal-box" style="max-width:400px;">
+    <div class="modal-head">
+      <div class="modal-head-title" id="form-staf-title">&#128101; Tambah Staff</div>
+      <button class="modal-close" onclick="closeModal('modal-form-staf')">&#10005;</button>
+    </div>
+    <div class="modal-field-label">Nama Lengkap *</div>
+    <input class="modal-input" id="s-nama" placeholder="Nama staff">
+    <div class="modal-field-label">Email *</div>
+    <input class="modal-input" id="s-email" type="email" placeholder="email@domain.com">
+    <div class="modal-field-label">Password *</div>
+    <input class="modal-input" id="s-password" type="password" placeholder="Min. 6 karakter">
+    <div class="modal-field-label">Assign ke Cabang *</div>
+    <select class="modal-input" id="s-cabang"><option value="">Pilih cabang...</option></select>
+    <input type="hidden" id="s-edit-id">
+    <button class="btn-primary" id="s-btn-save" onclick="simpanStaf()">Simpan Staff</button>
+    <button class="btn-secondary" onclick="closeModal('modal-form-staf')">Batal</button>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="js/include.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/dashboard.js"></script>
+<script>
+  loadSidebar("dashboard");
+  document.getElementById("currentDate").innerText = new Date().toLocaleDateString("id-ID", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric"
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kategori Produk - Warungin</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/kategori.css">
+  <link rel="icon" href="assets/logo.png">
+</head>
+<body>
+
+<div class="app">
+  <div id="sidebar-wrap"></div>
+
+  <div class="main">
+
+    <div class="topbar">
+      <button class="hamburger" onclick="toggleSidebar()">&#9776;</button>
+      <div class="topbar-title">Kategori Produk</div>
+      <div class="role-badge" id="roleText">OWNER</div>
+    </div>
+
+    <div class="content">
+
+      <!-- STATS ROW -->
+      <div class="kat-stats">
+        <div class="kat-stat-card">
+          <span class="kat-stat-num" id="totalKategori">0</span>
+          <span class="kat-stat-label">Total Kategori</span>
+        </div>
+        <div class="kat-stat-card">
+          <span class="kat-stat-num" id="totalProduk">0</span>
+          <span class="kat-stat-label">Total Produk</span>
+        </div>
+      </div>
+
+      <!-- KATEGORI GRID -->
+      <div class="section-title">Semua Kategori <span class="section-count-badge" id="kat-limit-badge">0/25</span></div>
+      <div id="grid-kategori" class="kat-grid"></div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FAB -->
+<button class="fab" id="fab-tambah-kat" onclick="openModal('modal-tambah-kat')" title="Tambah Kategori">&#43;</button>
+
+<!-- MODAL TAMBAH / EDIT -->
+<div id="modal-tambah-kat" class="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-head-title" id="modal-kat-title">&#127991; Tambah Kategori</div>
+      <button class="modal-close" onclick="closeModal('modal-tambah-kat')">&#10005;</button>
+    </div>
+
+    <input class="modal-input" id="kat-nama" placeholder="Nama Kategori">
+
+    <div class="modal-field-label">Pilih Ikon</div>
+    <div class="icon-picker" id="icon-picker"></div>
+
+    <div class="modal-field-label" style="margin-top:12px;">Pilih Warna</div>
+    <div class="color-picker" id="color-picker"></div>
+
+    <!-- Preview -->
+    <div class="kat-preview" id="kat-preview">
+      <div class="kat-preview-icon" id="prev-icon">&#127828;</div>
+      <span id="prev-nama">Nama Kategori</span>
+    </div>
+
+    <input type="hidden" id="kat-icon" value="&#127828;">
+    <input type="hidden" id="kat-warna" value="#f97316">
+    <input type="hidden" id="kat-edit-id" value="">
+
+    <button class="btn-primary" id="btn-simpan-kat" onclick="simpanKategori()">Simpan Kategori</button>
+    <button class="btn-secondary" onclick="closeModal('modal-tambah-kat')">Batal</button>
+  </div>
+</div>
+
+<!-- MODAL KONFIRMASI HAPUS -->
+<div id="modal-hapus-kat" class="modal">
+  <div class="modal-box" style="max-width:340px; text-align:center;">
+    <div style="font-size:40px; margin-bottom:12px;">&#128465;</div>
+    <h3 style="margin-bottom:8px;">Hapus Kategori?</h3>
+    <p style="color:#94A3B8; font-size:13px; margin-bottom:20px;">
+      Produk dalam kategori ini tidak akan terhapus.
+    </p>
+    <button class="btn-primary" style="background:#ef4444;" id="btn-konfirm-hapus">Ya, Hapus</button>
+    <button class="btn-secondary" onclick="closeModal('modal-hapus-kat')">Batal</button>
+  </div>
+</div>
+
+
+<script src="js/include.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/kategori.js"></script>
+<script>
+  loadSidebar("kategori");
+</script>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+Options -Indexes
+RewriteEngine On
+
+# Serve index.html for root (handled by DirectoryIndex)
+DirectoryIndex index.html
+
+# If the exact file exists, serve it as-is
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Strip .html: request for /page serves /page.html
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^([^.]+)$ $1.html [L]

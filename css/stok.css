@@ -1,0 +1,215 @@
+/* ===== STATS ===== */
+.stok-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+  max-width: 500px;
+}
+
+.stok-stat {
+  background: #1E293B;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #1E3050;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-left: 4px solid #334155;
+}
+.stok-stat.green  { border-left-color: #22c55e; }
+.stok-stat.yellow { border-left-color: #eab308; }
+.stok-stat.red    { border-left-color: #ef4444; }
+
+.stok-stat-num   { font-size: 26px; font-weight: 700; }
+.stok-stat-label { font-size: 12px; color: #64748B; }
+
+/* ===== TOOLBAR ===== */
+.stok-toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.stok-search {
+  flex: 1;
+  padding: 10px 14px;
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+}
+.stok-search:focus { outline: none; border-color: #3b82f6; }
+
+.stok-filter {
+  padding: 10px 14px;
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  appearance: none;
+  cursor: pointer;
+}
+.stok-filter:focus { outline: none; border-color: #3b82f6; }
+
+/* ===== LIST ===== */
+.stok-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 40px;
+}
+
+/* ===== ITEM ===== */
+.stok-item {
+  background: #1E293B;
+  border-radius: 12px;
+  border: 1px solid #1E3050;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: background 0.2s;
+}
+.stok-item:hover { background: #273449; }
+
+.stok-item-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #0F172A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  border: 1px solid #334155;
+}
+
+.stok-item-info { flex: 1; min-width: 0; }
+.stok-item-nama {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stok-item-meta {
+  font-size: 12px;
+  color: #64748B;
+  margin-top: 3px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.stok-item-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.stok-num-wrap { text-align: center; }
+.stok-num {
+  font-size: 20px;
+  font-weight: 700;
+  display: block;
+  line-height: 1;
+}
+.stok-num-label { font-size: 10px; color: #64748B; }
+
+.btn-atur-stok {
+  padding: 7px 14px;
+  background: #1d4ed8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.btn-atur-stok:hover { background: #2563eb; }
+
+/* ===== MODAL STOK ===== */
+.stok-produk-info {
+  background: #0F172A;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  border: 1px solid #334155;
+  font-size: 13px;
+}
+.stok-produk-info strong { display: block; font-size: 15px; margin-bottom: 4px; }
+
+.stok-type-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.stok-type-btn {
+  flex: 1;
+  padding: 9px;
+  background: #0F172A;
+  color: #64748B;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.stok-type-btn:hover { background: #1E293B; color: white; }
+.stok-type-btn.active { background: #1d4ed8; color: white; border-color: #1d4ed8; }
+
+.stok-qty-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.stok-qty-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background: #0F172A;
+  color: white;
+  border: 1px solid #334155;
+  font-size: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.stok-qty-btn:hover { background: #1E293B; }
+
+.stok-qty-input {
+  flex: 1;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.stok-preview-row {
+  background: #0F172A;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #94A3B8;
+  border: 1px dashed #334155;
+  min-height: 36px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .stok-toolbar { flex-direction: column; }
+  .stok-filter  { width: 100%; }
+}

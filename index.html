@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Warungin</title>
+</head>
+<body>
+<script>
+  var tenantId = localStorage.getItem("tenant_id");
+  var isLogin  = localStorage.getItem("is_login");
+  var role     = localStorage.getItem("role");
+
+  if (isLogin === "true" && tenantId) {
+    window.location.replace(role === "owner" ? "dashboard" : "kasir");
+  } else {
+    window.location.replace("login");
+  }
+</script>
+</body>
+</html>

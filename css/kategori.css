@@ -1,0 +1,161 @@
+/* ===== STATS ROW ===== */
+.kat-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 24px;
+  max-width: 360px;
+}
+
+.kat-stat-card {
+  background: #1E293B;
+  border-radius: 12px;
+  padding: 18px 20px;
+  border: 1px solid #1E3050;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kat-stat-num {
+  font-size: 26px;
+  font-weight: 700;
+  color: white;
+}
+
+.kat-stat-label {
+  font-size: 12px;
+  color: #64748B;
+}
+
+/* ===== KATEGORI GRID ===== */
+.kat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+  padding-bottom: 80px;
+}
+
+/* ===== KATEGORI CARD ===== */
+.kat-card {
+  background: #1E293B;
+  border-radius: 14px;
+  border: 1px solid #1E3050;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: background 0.2s, transform 0.15s;
+  position: relative;
+}
+.kat-card:hover { background: #273449; transform: translateY(-2px); }
+
+.kat-card-icon-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.kat-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.kat-card-count {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.kat-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.kat-btn-edit,
+.kat-btn-hapus {
+  padding: 6px 14px;
+  border-radius: 7px;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.kat-btn-edit  { background: #1d4ed8; color: white; }
+.kat-btn-edit:hover  { background: #2563eb; }
+
+.kat-btn-hapus { background: #991b1b; color: white; }
+.kat-btn-hapus:hover { background: #ef4444; }
+
+/* ===== ICON PICKER ===== */
+.icon-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.icon-option {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: #0F172A;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.icon-option:hover { background: #1E293B; }
+.icon-option.selected { border-color: #22c55e; background: #1E293B; }
+
+/* ===== COLOR PICKER ===== */
+.color-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.color-option {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.color-option:hover    { transform: scale(1.15); }
+.color-option.selected { border-color: white; transform: scale(1.15); }
+
+/* ===== PREVIEW ===== */
+.kat-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #0F172A;
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #334155;
+}
+
+.kat-preview-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  background: #f9731630;
+}

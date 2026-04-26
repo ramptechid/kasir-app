@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stok Produk - Warungin</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/stok.css">
+  <link rel="icon" href="assets/logo.png">
+</head>
+<body>
+
+<div class="app">
+  <div id="sidebar-wrap"></div>
+
+  <div class="main">
+
+    <div class="topbar">
+      <button class="hamburger" onclick="toggleSidebar()">&#9776;</button>
+      <div class="topbar-title">&#128202; Stok Produk</div>
+      <div class="role-badge" id="roleText">OWNER</div>
+    </div>
+
+    <div class="content">
+
+      <!-- Cabang Selector (owner saja) -->
+      <div class="cabang-bar" id="cabang-bar" style="display:none;">
+        <span class="cabang-bar-label">&#127978; Warung:</span>
+        <select id="cabang-selector" class="cabang-select"></select>
+        <span id="cabang-bar-hint" style="display:none;color:#eab308;font-size:12px;">
+          &#9888; Belum ada cabang &mdash; <a href="dashboard.html" style="color:#eab308;">tambah di Dashboard</a>
+        </span>
+      </div>
+
+      <!-- STATS -->
+      <div class="stok-stats">
+        <div class="stok-stat green">
+          <span class="stok-stat-num" id="st-tersedia">0</span>
+          <span class="stok-stat-label">Tersedia</span>
+        </div>
+        <div class="stok-stat yellow">
+          <span class="stok-stat-num" id="st-menipis">0</span>
+          <span class="stok-stat-label">Menipis</span>
+        </div>
+        <div class="stok-stat red">
+          <span class="stok-stat-num" id="st-habis">0</span>
+          <span class="stok-stat-label">Habis</span>
+        </div>
+      </div>
+
+      <!-- FILTER -->
+      <div class="stok-toolbar">
+        <input id="stok-search" class="stok-search" placeholder="&#128269; Cari produk..." oninput="filterStok()">
+        <select id="stok-filter" class="stok-filter" onchange="filterStok()">
+          <option value="">Semua Status</option>
+          <option value="tersedia">Tersedia</option>
+          <option value="menipis">Menipis</option>
+          <option value="habis">Habis</option>
+        </select>
+      </div>
+
+      <div class="section-title">Daftar Stok</div>
+      <div id="stok-list" class="stok-list"></div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL SESUAIKAN STOK -->
+<div id="modal-stok" class="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-head-title">&#128202; Sesuaikan Stok</div>
+      <button class="modal-close" onclick="closeModal('modal-stok')">&#10005;</button>
+    </div>
+
+    <div class="stok-produk-info" id="stok-produk-info"></div>
+
+    <!-- Jenis Perubahan — tombol Kurangi & Set disembunyikan untuk staff -->
+    <div class="modal-field-label">Jenis Perubahan</div>
+    <div class="stok-type-row">
+      <button class="stok-type-btn active" id="btn-tambah" onclick="setStokType('tambah')">&#43; Tambah</button>
+      <button class="stok-type-btn owner-only" id="btn-kurang" onclick="setStokType('kurang')">&#8722; Kurangi</button>
+      <button class="stok-type-btn owner-only" id="btn-set"    onclick="setStokType('set')">&#61; Set Manual</button>
+    </div>
+
+    <div class="modal-field-label" style="margin-top:12px;">Jumlah</div>
+    <div class="stok-qty-row">
+      <button class="stok-qty-btn" onclick="changeQty(-1)">&#8722;</button>
+      <input  class="modal-input stok-qty-input" id="stok-qty" type="number" min="0" value="1">
+      <button class="stok-qty-btn" onclick="changeQty(1)">&#43;</button>
+    </div>
+
+    <input class="modal-input" id="stok-catatan" placeholder="Catatan (opsional)">
+    <div class="stok-preview-row" id="stok-preview-row"></div>
+
+    <input type="hidden" id="stok-edit-id">
+    <input type="hidden" id="stok-type" value="tambah">
+
+    <button class="btn-primary" onclick="simpanStok()">Simpan Perubahan</button>
+    <button class="btn-secondary" onclick="closeModal('modal-stok')">Batal</button>
+  </div>
+</div>
+
+
+<script src="js/include.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/stok.js"></script>
+<script>
+  loadSidebar("stok");
+</script>
+
+</body>
+</html>

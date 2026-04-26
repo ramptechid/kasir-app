@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Produk</title>
+
+<link rel="stylesheet" href="css/produk.css">
+<link rel="stylesheet" href="css/footer-dashboard.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>📊 Produk / Stok</h2>
+
+<select id="produkSelect"></select>
+<input id="harga" placeholder="Harga">
+<input id="stok" placeholder="Stok">
+
+<button onclick="addProduk()">Tambah</button>
+
+<div id="list"></div>
+
+</div>
+
+<div id="footer-dashboard"></div>
+
+<script src="js/include.js"></script>
+<script src="js/footer-dashboard.js"></script>
+<script src="js/produk.js"></script>
+
+<script>
+loadComponent("footer-dashboard","components/footer-dashboard.html");
+</script>
+
+</body>
+</html>

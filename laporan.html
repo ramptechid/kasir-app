@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laporan - Warungin</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/laporan.css">
+  <link rel="icon" href="assets/logo.png">
+</head>
+<body>
+
+<div class="app">
+  <div id="sidebar-wrap"></div>
+
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" onclick="toggleSidebar()">&#9776;</button>
+      <div class="topbar-title">&#128202; Laporan &amp; Export</div>
+      <div class="role-badge" id="roleText">OWNER</div>
+    </div>
+
+    <div class="content">
+
+      <!-- FILTER BAR -->
+      <div class="lap-filter-bar">
+        <div class="lap-quick-tabs">
+          <button class="lq-tab active" onclick="setQuick('today', this)">Hari Ini</button>
+          <button class="lq-tab" onclick="setQuick('week', this)">7 Hari</button>
+          <button class="lq-tab" onclick="setQuick('month', this)">Bulan Ini</button>
+          <button class="lq-tab" onclick="setQuick('lastmonth', this)">Bulan Lalu</button>
+        </div>
+        <div class="lap-filter-bottom">
+          <select id="lap-cabang" class="lap-cabang-select">
+            <option value="">&#127978; Semua Cabang</option>
+          </select>
+          <div class="lap-date-row">
+            <input type="date" id="lap-dari"   class="lap-date-input">
+            <span class="lap-date-sep">s/d</span>
+            <input type="date" id="lap-sampai" class="lap-date-input">
+          </div>
+          <button class="lap-btn-tampil" onclick="loadLaporan()">&#128269; Tampilkan</button>
+        </div>
+      </div>
+
+      <!-- KPI CARDS -->
+      <div class="lap-kpi-grid">
+        <div class="lap-kpi-card green">
+          <div class="lap-kpi-icon">&#128176;</div>
+          <div class="lap-kpi-body">
+            <div class="lap-kpi-val" id="l-pendapatan">Rp 0</div>
+            <div class="lap-kpi-label">Total Pendapatan</div>
+          </div>
+        </div>
+        <div class="lap-kpi-card blue">
+          <div class="lap-kpi-icon">&#129534;</div>
+          <div class="lap-kpi-body">
+            <div class="lap-kpi-val" id="l-transaksi">0</div>
+            <div class="lap-kpi-label">Total Transaksi</div>
+          </div>
+        </div>
+        <div class="lap-kpi-card purple">
+          <div class="lap-kpi-icon">&#128200;</div>
+          <div class="lap-kpi-body">
+            <div class="lap-kpi-val" id="l-avg">Rp 0</div>
+            <div class="lap-kpi-label">Rata-rata / Transaksi</div>
+          </div>
+        </div>
+        <div class="lap-kpi-card orange">
+          <div class="lap-kpi-icon">&#128179;</div>
+          <div class="lap-kpi-body">
+            <div class="lap-kpi-val" id="l-top-metode">&#8212;</div>
+            <div class="lap-kpi-label">Metode Terbanyak</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANALYTICS ROW -->
+      <div class="lap-analytics-row">
+
+        <div class="lap-card">
+          <div class="lap-card-title">&#128179; Metode Pembayaran</div>
+          <div id="l-metode-list"><div class="lap-empty">Pilih periode dan klik Tampilkan</div></div>
+        </div>
+
+        <div class="lap-card">
+          <div class="lap-card-title">&#128336; Jam Tersibuk</div>
+          <div id="l-jam-list"><div class="lap-empty">Pilih periode dan klik Tampilkan</div></div>
+        </div>
+
+      </div>
+
+      <!-- TABEL TRANSAKSI -->
+      <div class="lap-card" style="margin-bottom:40px;">
+        <div class="lap-table-head">
+          <div class="lap-card-title">&#129534; Riwayat Transaksi</div>
+          <button class="btn-export" id="btn-export" onclick="exportExcel()" disabled>
+            &#11015; Export Excel
+          </button>
+        </div>
+        <div id="l-tx-table"><div class="lap-empty">Pilih periode dan klik Tampilkan</div></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script src="js/include.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/laporan.js"></script>
+<script>
+  loadSidebar("laporan");
+</script>
+
+</body>
+</html>

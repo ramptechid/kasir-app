@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="card">
+
+    <div class="logo">
+      <img src="assets/logo.png" alt="Warungin Logo">
+    </div>
+
+    <h2>Login</h2>
+
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+
+    <button id="loginBtn" onclick="login()">Login</button>
+
+    <p>Belum punya akun? <a href="register.html">Daftar</a></p>
+
+  </div>
+</div>
+<div id="footer-container"></div>
+
+<script src="js/include.js"></script>
+<script>
+  loadComponent("footer-container", "components/footer.html");
+</script>
+<script src="js/api.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>
