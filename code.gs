@@ -74,7 +74,7 @@ function generateId() {
 
 function setupTenantSheet(ss) {
   getOrCreateSheet(ss, "products",          ["id","nama","harga","harga_modal","barcode","kategori","icon"]);
-  getOrCreateSheet(ss, "kategori",          ["id","nama","icon"]);
+  getOrCreateSheet(ss, "kategori",          ["id","nama","icon","warna"]);
   getOrCreateSheet(ss, "cabang",            ["id","nama","alamat","telepon"]);
   getOrCreateSheet(ss, "stok",              ["id","product_id","cabang_id","qty"]);
   getOrCreateSheet(ss, "staff",             ["id","nama","email","password","cabang_id","role"]);
@@ -338,22 +338,40 @@ function getKategori(data) {
   var sheet = ss.getSheetByName("kategori");
   if (!sheet) return { status: "success", data: [] };
 
+  // Hitung jumlah produk per nama kategori
+  var countMap = {};
+  var pSheet   = ss.getSheetByName("products");
+  if (pSheet) {
+    var pRows = pSheet.getDataRange().getValues();
+    for (var i = 1; i < pRows.length; i++) {
+      var katNama = String(pRows[i][5] || "").trim();
+      if (katNama) countMap[katNama] = (countMap[katNama] || 0) + 1;
+    }
+  }
+
   var rows = sheet.getDataRange().getValues();
   var result = [];
   for (var i = 1; i < rows.length; i++) {
     if (!rows[i][0]) continue;
-    result.push({ id: String(rows[i][0]), nama: String(rows[i][1]), icon: String(rows[i][2] || "") });
+    var nama = String(rows[i][1]);
+    result.push({
+      id:     String(rows[i][0]),
+      nama:   nama,
+      icon:   String(rows[i][2] || ""),
+      warna:  String(rows[i][3] || ""),
+      jumlah: countMap[nama] || 0
+    });
   }
   return { status: "success", data: result };
 }
 
 function addKategori(data) {
   var ss    = getTenantSS(data.tenant_id);
-  var sheet = getOrCreateSheet(ss, "kategori", ["id","nama","icon"]);
+  var sheet = getOrCreateSheet(ss, "kategori", ["id","nama","icon","warna"]);
   if (Math.max(0, sheet.getLastRow() - 1) >= 25)
     return { status: "error", message: "Batas maksimal 25 kategori telah tercapai" };
   var id = generateId();
-  sheet.appendRow([id, data.nama || "", data.icon || ""]);
+  sheet.appendRow([id, data.nama || "", data.icon || "", data.warna || ""]);
   return { status: "success", message: "Kategori berhasil ditambahkan", id: id };
 }
 
@@ -365,8 +383,9 @@ function updateKategori(data) {
   var rows = sheet.getDataRange().getValues();
   for (var i = 1; i < rows.length; i++) {
     if (String(rows[i][0]) === String(data.id)) {
-      sheet.getRange(i + 1, 2).setValue(data.nama !== undefined ? data.nama : rows[i][1]);
-      sheet.getRange(i + 1, 3).setValue(data.icon !== undefined ? data.icon : rows[i][2]);
+      sheet.getRange(i + 1, 2).setValue(data.nama  !== undefined ? data.nama  : rows[i][1]);
+      sheet.getRange(i + 1, 3).setValue(data.icon  !== undefined ? data.icon  : rows[i][2]);
+      sheet.getRange(i + 1, 4).setValue(data.warna !== undefined ? data.warna : rows[i][3]);
       return { status: "success", message: "Kategori berhasil diupdate" };
     }
   }
