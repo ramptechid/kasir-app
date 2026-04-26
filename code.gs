@@ -383,9 +383,26 @@ function updateKategori(data) {
   var rows = sheet.getDataRange().getValues();
   for (var i = 1; i < rows.length; i++) {
     if (String(rows[i][0]) === String(data.id)) {
-      sheet.getRange(i + 1, 2).setValue(data.nama  !== undefined ? data.nama  : rows[i][1]);
+      var oldNama = String(rows[i][1]);
+      var newNama = data.nama !== undefined ? data.nama : oldNama;
+
+      sheet.getRange(i + 1, 2).setValue(newNama);
       sheet.getRange(i + 1, 3).setValue(data.icon  !== undefined ? data.icon  : rows[i][2]);
       sheet.getRange(i + 1, 4).setValue(data.warna !== undefined ? data.warna : rows[i][3]);
+
+      // Kalau nama kategori berubah, update semua produk yang pakai nama lama
+      if (newNama !== oldNama) {
+        var pSheet = ss.getSheetByName("products");
+        if (pSheet) {
+          var pRows = pSheet.getDataRange().getValues();
+          for (var j = 1; j < pRows.length; j++) {
+            if (String(pRows[j][5]).trim() === oldNama.trim()) {
+              pSheet.getRange(j + 1, 6).setValue(newNama);
+            }
+          }
+        }
+      }
+
       return { status: "success", message: "Kategori berhasil diupdate" };
     }
   }

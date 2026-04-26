@@ -224,12 +224,6 @@ function resetForm() {
   updatePreview();
 }
 
-// Saat FAB diklik → reset form dulu
-const origOpen = window.openModal;
-window.openModal = function(id) {
-  if (id === "modal-tambah-kat") resetForm();
-  origOpen(id);
-};
 
 
 // ===== INIT =====
